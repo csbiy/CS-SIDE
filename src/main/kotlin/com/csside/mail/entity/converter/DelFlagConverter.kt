@@ -9,9 +9,7 @@ class DelFlagConverter : AttributeConverter<DelFlag, String> {
     override fun convertToDatabaseColumn(attribute: DelFlag): String {
         return attribute.value;
     }
-
     override fun convertToEntityAttribute(dbData: String): DelFlag {
         return enumValueOf<DelFlag>(dbData);
     }
-
 }
