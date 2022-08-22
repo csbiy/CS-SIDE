@@ -1,25 +1,24 @@
 package com.csside.mail.entity
 
-import com.csside.mail.entity.converter.DelFlagConverter
 import com.csside.mail.enumeration.DelFlag
+import com.csside.mail.enumeration.DelFlagConverter
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Convert
-import javax.persistence.MappedSuperclass
+import javax.persistence.*
 
 @MappedSuperclass
-open abstract class BaseEntity {
+abstract class BaseEntity {
     @CreatedDate
-    @Column(name = "create_date")
-    protected val createdAt: LocalDateTime = LocalDateTime.now()
+    @Column(name = "create_date" , nullable = false)
+    open val createdAt: LocalDateTime = LocalDateTime.now()
 
     @Convert(converter = DelFlagConverter::class)
-    @Column
+    @Column(nullable = false)
     protected val delFlag: DelFlag = DelFlag.N
 
     @CreatedBy
-    @Column
+    @Column(nullable = false)
     protected val createdBy: String =  "admin"
 }
+
