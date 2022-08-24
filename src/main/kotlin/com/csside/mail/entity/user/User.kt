@@ -1,23 +1,30 @@
 package com.csside.mail.entity.user
 
 import com.csside.mail.entity.BaseEntity
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.csside.mail.enumeration.UserRole
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import java.util.stream.Collectors
+import javax.persistence.*
 
 @Entity
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val userKey :Int = 0,
-    @Column
     val userId :String,
-    @Column
-    val password:String,
-    @Column
+    var password:String,
     val email:String,
-    @Column
-    val name:String
-) : BaseEntity()
+    val name:String,
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    val roles : Set<UserRole>
+) : BaseEntity(){
+
+    fun getUserDetail(): org.springframework.security.core.userdetails.User {
+       return org.springframework.security.core.userdetails.User(email, password, roles.stream().map {
+            SimpleGrantedAuthority("ROLE_$it")
+        }.collect(Collectors.toSet()))
+    }
+}
+
+
