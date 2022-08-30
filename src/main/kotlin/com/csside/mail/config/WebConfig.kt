@@ -1,6 +1,6 @@
 package com.csside.mail.config
 
-import com.csside.mail.entity.user.User
+import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserRole
 import com.csside.mail.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,8 +25,8 @@ class WebConfig {
             @Autowired
             lateinit var userService: UserService
             override fun run(args: ApplicationArguments) {
-                val testUser = User(userId = "test@naver.com" , password = "1234", email = "test@naver.com" , roles = mutableSetOf(
-                    UserRole.USER), name = "tester")
+                val testUser = AppUser(password = "1234", email = "test@naver.com" , role =
+                UserRole.USER, name = "tester")
                 userService.saveUser(testUser)
             }
         }
