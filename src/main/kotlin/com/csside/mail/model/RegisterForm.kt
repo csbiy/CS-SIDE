@@ -1,13 +1,11 @@
 package com.csside.mail.model
 
 import com.csside.mail.entity.user.AppUser
+import com.csside.mail.enumeration.UserRole
 
-data class RegisterForm(var name: String? = null,
-                        var email: String? = null,
-                        var password: String? = null,
-                        var repeatPassword: String? = null){
-
-    fun toUser() :AppUser {
-    //TODO
-    }
+data class RegisterForm(var name: String = "",
+                        var email: String = "",
+                        var password: String = "",
+                        var repeatPassword: String = ""){
+    fun toUser() =AppUser(password= password, email = email, name = name, role = UserRole.USER)
 }

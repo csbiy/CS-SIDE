@@ -1,17 +1,18 @@
 package com.csside.mail.controller
 
+import com.csside.mail.controller.validator.UserRegisterValidator
 import com.csside.mail.model.RegisterForm
-import com.csside.mail.repository.UserRepository
+import com.csside.mail.service.UserService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
-class HomeController(@Autowired val userRepository: UserRepository) {
+class HomeController(val userService: UserService , val validator: UserRegisterValidator) {
 
     final val logger = LoggerFactory.getLogger(this::class.java)
     @GetMapping("/home")
@@ -22,9 +23,11 @@ class HomeController(@Autowired val userRepository: UserRepository) {
         return "login"
     }
     @PostMapping("/register")
-    fun registerUser(@ModelAttribute registerForm: RegisterForm ):String{
-        // TODO registerForm validation
-        userRepository.save(registerForm.toUser());
+    fun registerUser(@ModelAttribute registerForm: RegisterForm , bindingResult: BindingResult  ):String{
+        validator.validate(registerForm,bindingResult);
+        if (bindingResult.hasErrors()) return "login"
+        userService.saveUser(registerForm.toUser());
         return "home"
     }
+
 }

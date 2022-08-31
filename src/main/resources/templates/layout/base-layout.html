@@ -1,5 +1,5 @@
-<html th:fragment="layout(title,section)" xmlns:th="http://www.thymeleaf.org" class="h-100">
-<head th:replace="~{/fragments/header :: head(title=${title})}"></head>
+<html th:fragment="layout(title,section,script)" xmlns:th="http://www.thymeleaf.org" class="h-100">
+<head th:replace="~{/fragments/header :: head(title=${title},script=${script})}"></head>
 <body class="h-100">
     <section th:replace="${section}"></section>
 </body>

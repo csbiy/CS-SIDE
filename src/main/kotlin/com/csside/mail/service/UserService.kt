@@ -9,8 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
+@Transactional
 class UserService(@Autowired private val userRepository :UserRepository,
                   @Autowired private val pwEncoder : PasswordEncoder) : UserDetailsService {
 
@@ -25,4 +27,5 @@ class UserService(@Autowired private val userRepository :UserRepository,
         user.password = pwEncoder.encode(user.password)
         return userRepository.save(user)
     }
+    fun isAlreadyExistEmail(email:String) = userRepository.findByEmail(email) != null
 }

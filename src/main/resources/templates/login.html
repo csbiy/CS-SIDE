@@ -1,5 +1,6 @@
 <!doctype html>
-<html th:replace="~{/layout/base-layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org" >
+<html th:replace="~{/layout/base-layout :: layout(~{::title}, ~{::section} , ~{::script})}" xmlns:th="http://www.thymeleaf.org" >
+<script type="text/javascript" src="/js/home/login-register.js" defer></script>
 <title>Login Page</title>
 <section class="h-100 m-5 d-flex align-items-center justify-content-center">
     <div class="w-50 h-50">
@@ -106,25 +107,25 @@
                         <input type="text" th:field="*{name}" class="form-control"/>
                         <label class="form-label" th:for="name">Name</label>
                     </div>
-
+                    <div th:errors="*{name}"></div>
                     <!-- Email input -->
                     <div class="border form-outline mb-4">
                         <input type="email" th:field="*{email}"  class="form-control"/>
                         <label class="form-label" th:for="email">Email</label>
                     </div>
-
+                    <div th:errors="*{email}"></div>
                     <!-- Password input -->
                     <div class="border form-outline mb-4">
                         <input type="password" th:field="*{password}" class="form-control"/>
                         <label class="form-label" th:for="password">Password</label>
                     </div>
-
+                    <div th:errors="*{password}"></div>
                     <!-- Repeat Password input -->
                     <div class="border form-outline mb-4">
                         <input type="password" th:field="*{repeatPassword}" class="form-control"/>
                         <label class="form-label" th:for="repeatPassword">Repeat password</label>
                     </div>
-
+                    <div th:errors="*{repeatPassword}"></div>
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block mb-3">회원가입</button>
                 </form>
