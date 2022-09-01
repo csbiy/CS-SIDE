@@ -1,14 +1,11 @@
 package com.csside.mail
 
 import com.csside.mail.entity.user.AppUser
-import com.csside.mail.entity.user.User
 import com.csside.mail.enumeration.UserRole
-import com.csside.mail.repository.UserRepository
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.Commit
 import javax.persistence.EntityManagerFactory
 
 @SpringBootTest
