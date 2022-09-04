@@ -16,15 +16,9 @@ import javax.transaction.Transactional
 class UserService(@Autowired private val userRepository :UserRepository,
                   @Autowired private val pwEncoder : PasswordEncoder) : UserDetailsService {
 
-    private val logger = LoggerFactory.getLogger(this::class.java)
-    override fun loadUserByUsername(username: String): UserDetails {
-        val foundUser = userRepository.findByEmail(username) ?. getUserDetail()  ?: throw UserNotExistException()
-        logger.info("login succeed -- user email :{},user authority : {}",foundUser.username,foundUser.authorities)
-        return foundUser
-    }
-
+    override fun loadUserByUsername(username: String): UserDetails =userRepository.findByEmail(username) ?: throw UserNotExistException()
     fun saveUser(user:AppUser) :AppUser{
-        user.password = pwEncoder.encode(user.password)
+        user.pw = pwEncoder.encode(user.pw)
         return userRepository.save(user)
     }
     fun isAlreadyExistEmail(email:String) = userRepository.findByEmail(email) != null
