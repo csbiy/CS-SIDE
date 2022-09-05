@@ -31,4 +31,22 @@ internal class UserRegisterValidatorTest{
         assertThat(errors.getFieldErrors("email").size).isEqualTo(1)
     }
 
+    @Test
+    fun `should validate if password has invalid format`(){
+        val shortPw = "k12345!"
+        validate(RegisterForm(name = "test" , email = "katd6@naver.com" , password = shortPw, repeatPassword = shortPw))
+
+        val pwWithNoAlpha = "123456789"
+        validate(RegisterForm(name = "test" , email = "katd6@naver.com" , password = pwWithNoAlpha, repeatPassword = pwWithNoAlpha))
+        // 비밀번호 , 재입력비밀번호가 다른 경우
+        validate(RegisterForm(name = "test" , email = "katd6@naver.com" , password = "${pwWithNoAlpha}a", repeatPassword = "${pwWithNoAlpha}a!"))
+    }
+
+    private fun validate(registerForm: RegisterForm) {
+        val errors = BeanPropertyBindingResult(registerForm, "registerForm");
+        validator.validate(registerForm, errors)
+        assertThat(errors.hasErrors()).isTrue()
+        assertThat(errors.getFieldErrors("password").size).isEqualTo(1)
+    }
+
 }

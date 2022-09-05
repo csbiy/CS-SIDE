@@ -26,7 +26,7 @@ class WebConfig {
             lateinit var userService: UserService
             override fun run(args: ApplicationArguments) {
                 val testUser = AppUser(pw = "1234", email = "test@naver.com" , role =
-                UserRole.USER, name = "tester")
+                UserRole.USER, appUserName = "tester")
                 userService.saveUser(testUser)
             }
         }

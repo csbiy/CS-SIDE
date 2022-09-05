@@ -23,7 +23,7 @@ class UserRegisterValidator(val userService: UserService):Validator {
             return
         }
         if (registerForm.name.length < USERNAME_MIN_LENGTH){
-            errors.rejectValue("name","name.invalid")
+            errors.rejectValue("appUserName","name.invalid")
         }
         if (registerForm.password.length < PASSWORD_MIN_LENGTH || invalidPwRegex.matches(registerForm.password) ){
             errors.rejectValue("password","password.invalid")
@@ -43,7 +43,7 @@ class UserRegisterValidator(val userService: UserService):Validator {
 
     fun isRequiredFieldEmptry(registerForm : RegisterForm , errors: Errors){
         if(registerForm.name.isNullOrBlank()){
-            errors.rejectValue("name","name.require")
+            errors.rejectValue("appUserName","name.require")
         }
         if (registerForm.email.isNullOrBlank()){
             errors.rejectValue("email","email.require")

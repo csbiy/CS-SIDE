@@ -23,7 +23,7 @@ class DbConnTest {
 
         val em = enf.createEntityManager();
         em.transaction.begin()
-        val user = AppUser(password = "kim13032695", email = "katd6@naver.com", name = "cskim96", role = UserRole.ADMIN)
+        val user = AppUser(pw = "kim13032695", email = "katd6@naver.com", appUserName = "cskim96", role = UserRole.ADMIN)
         Assertions.assertThat(user.createdAt).isNotNull();
         em.persist(user)
         em.transaction.rollback()

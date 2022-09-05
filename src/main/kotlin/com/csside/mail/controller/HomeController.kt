@@ -30,4 +30,6 @@ class HomeController(val userService: UserService , val validator: UserRegisterV
         return "home"
     }
 
+
+
 }

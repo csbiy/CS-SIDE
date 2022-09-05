@@ -2,10 +2,9 @@ package com.csside.mail.entity.user
 
 import com.csside.mail.entity.BaseEntity
 import com.csside.mail.enumeration.UserRole
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.oauth2.core.user.OAuth2User
 import javax.persistence.*
 
 @Entity
@@ -15,11 +14,14 @@ class AppUser(
     val userKey :Int = 0,
     var pw :String,
     val email:String,
-    val name:String,
+    val appUserName:String,
     @Enumerated(EnumType.STRING)
     val role : UserRole
-) : BaseEntity() , UserDetails{
-
+) : BaseEntity() , UserDetails , OAuth2User {
+    override fun getName() = email
+    override fun getAttributes(): MutableMap<String, Any> {
+        return mutableMapOf()
+    }
     override fun getAuthorities() = listOf(SimpleGrantedAuthority("ROLE_$role"))
     override fun getPassword() = pw
     override fun getUsername() = email

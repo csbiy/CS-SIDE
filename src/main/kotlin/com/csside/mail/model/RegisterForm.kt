@@ -7,5 +7,5 @@ data class RegisterForm(var name: String = "",
                         var email: String = "",
                         var password: String = "",
                         var repeatPassword: String = ""){
-    fun toUser() =AppUser(pw= password, email = email, name = name, role = UserRole.USER)
+    fun toUser() =AppUser(pw= password, email = email, appUserName = name, role = UserRole.USER)
 }
