@@ -35,7 +35,7 @@ class UserRegisterValidator(val userService: UserService):Validator {
             errors.rejectValue("email","email.invalid")
             return
         }
-        if(userService.isAlreadyExistEmail(registerForm.email)) {
+        if(userService.findByEmail(registerForm.email) != null) {
             errors.rejectValue("email","email.exist")
         }
 

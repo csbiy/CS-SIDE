@@ -20,7 +20,6 @@ class DbConnTest {
 
     @Test
     fun testShouldCreateUser(){
-
         val em = enf.createEntityManager();
         em.transaction.begin()
         val user = AppUser(pw = "kim13032695", email = "katd6@naver.com", appUserName = "cskim96", role = UserRole.ADMIN)
@@ -28,6 +27,5 @@ class DbConnTest {
         em.persist(user)
         em.transaction.rollback()
         Assertions.assertThat(user.userKey).isNotEqualTo(0);
-
     }
 }

@@ -1,6 +1,6 @@
 package com.csside.mail.config
 
-import com.csside.mail.service.OAuthUserService
+import com.csside.mail.service.CustomOAuthUserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
@@ -8,18 +8,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
+import org.springframework.security.oauth2.core.user.OAuth2User
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfig(@Autowired private val userDetailService : UserDetailsService,
-                     @Autowired private val pwEncoder : PasswordEncoder,
-                     @Autowired private val oAuthUserService: OAuthUserService) :WebSecurityConfigurerAdapter(){
+class SecurityConfig(val customUserDetailsService: UserDetailsService,
+                     val pwEncoder : PasswordEncoder,
+                     val customOAuthUserService: OAuth2UserService<OAuth2UserRequest,OAuth2User>) :WebSecurityConfigurerAdapter(){
 
     private final val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -50,7 +49,7 @@ class SecurityConfig(@Autowired private val userDetailService : UserDetailsServi
             .oauth2Login()
             .loginPage("/login")
             .userInfoEndpoint()
-            .userService(oAuthUserService)
+            .userService(customOAuthUserService)
             .and()
             .successHandler({ req, res, auth ->
                 logger.info("login succeed")
@@ -64,7 +63,7 @@ class SecurityConfig(@Autowired private val userDetailService : UserDetailsServi
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth
-            .userDetailsService(userDetailService)
+            .userDetailsService(customUserDetailsService)
             .passwordEncoder(pwEncoder)
     }
 }

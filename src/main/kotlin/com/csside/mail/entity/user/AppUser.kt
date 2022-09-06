@@ -2,34 +2,30 @@ package com.csside.mail.entity.user
 
 import com.csside.mail.entity.BaseEntity
 import com.csside.mail.enumeration.UserRole
+import com.csside.mail.enumeration.UserType
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.oauth2.core.user.OAuth2User
 import javax.persistence.*
 
 @Entity
-class AppUser(
+open class AppUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val userKey :Int = 0,
     var pw :String,
-    val email:String,
-    val appUserName:String,
+    var email:String,
+    var appUserName:String,
     @Enumerated(EnumType.STRING)
-    val role : UserRole
-) : BaseEntity() , UserDetails , OAuth2User {
-    override fun getName() = email
-    override fun getAttributes(): MutableMap<String, Any> {
-        return mutableMapOf()
-    }
-    override fun getAuthorities() = listOf(SimpleGrantedAuthority("ROLE_$role"))
-    override fun getPassword() = pw
-    override fun getUsername() = email
-    override fun isAccountNonExpired()  = true
-    override fun isAccountNonLocked() = true
-    override fun isCredentialsNonExpired() = true
-    override fun isEnabled() = true
+    var role : UserRole = UserRole.USER,
+    @Enumerated(EnumType.STRING)
+    var userType : UserType = UserType.NORMAL
+) : BaseEntity() {
+
+    fun toUserDetails(): UserDetails = User(appUserName,pw,listOf(SimpleGrantedAuthority("ROLE_$role")))
+
 
 }
+
 
 
