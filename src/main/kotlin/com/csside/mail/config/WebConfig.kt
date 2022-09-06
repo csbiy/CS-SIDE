@@ -1,5 +1,6 @@
 package com.csside.mail.config
 
+import com.csside.mail.component.*
 import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserRole
 import com.csside.mail.service.UserService
@@ -19,8 +20,6 @@ class WebConfig {
 
     @Bean
     fun applicationRunner() : ApplicationRunner {
-
-        println("application runner executed")
         return object : ApplicationRunner {
             @Autowired
             lateinit var userService: UserService
@@ -31,4 +30,17 @@ class WebConfig {
             }
         }
     }
+
+    @Bean
+    fun oauth2UserHandler(
+        googleOAuth2Handler: OAuth2UserHandler,
+        facebookOAuth2Handler: OAuth2UserHandler,
+        kakaoOAuth2Handler: KakaoOAuth2Handler,
+        naverOAuth2Handler: NaverOAuth2Handler
+    ): OAuth2UserAdapter {
+        val handlers = listOf(googleOAuth2Handler, facebookOAuth2Handler , kakaoOAuth2Handler , naverOAuth2Handler);
+        return OAuth2UserAdapter(handlers)
+    }
+
+
 }
