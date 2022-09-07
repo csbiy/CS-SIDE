@@ -1,4 +1,4 @@
-package com.csside.mail.component
+package com.csside.mail.oauth
 
 import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserType
@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Component
 
 @Component
-class FacebookOAuth2Handler :OAuth2UserHandler {
+class FacebookOAuth2Handler : OAuth2UserHandler {
     override val clientName: String
         get() = "Facebook"
 

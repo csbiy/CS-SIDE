@@ -1,4 +1,4 @@
-package com.csside.mail.component
+package com.csside.mail.oauth
 
 import com.csside.mail.entity.user.AppUser
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest

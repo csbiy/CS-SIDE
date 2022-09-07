@@ -1,6 +1,7 @@
 package com.csside.mail.service
 
-import com.csside.mail.component.OAuth2UserAdapter
+import com.csside.mail.oauth.OAuth2UserAdapter
+import org.apache.commons.lang3.builder.ToStringBuilder
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
@@ -13,6 +14,8 @@ class CustomOAuthUserService(val userService: UserService,val oAuth2UserHandler:
     private final val delegate = DefaultOAuth2UserService()
     override fun loadUser(req: OAuth2UserRequest): OAuth2User {
         val loadUser = delegate.loadUser(req)
+
+        println(ToStringBuilder.reflectionToString(loadUser))
         val appUser = oAuth2UserHandler.toAppUser(oauth2User = loadUser , req = req);
         userService.updateUser(appUser)
         return loadUser;

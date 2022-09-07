@@ -8,5 +8,11 @@ document.onload = (()=>{
    document.querySelector("#facebook-btn").addEventListener("click",()=>{
       location.href="/oauth2/authorization/facebook"
    })
+   document.querySelector("#naver-btn").addEventListener("click",()=>{
+      location.href="/oauth2/authorization/naver"
+   })
+   document.querySelector("#kakao-btn").addEventListener("click",()=>{
+      location.href="/oauth2/authorization/kakao"
+   })
 
 })()

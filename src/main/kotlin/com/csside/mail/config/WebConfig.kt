@@ -1,9 +1,14 @@
 package com.csside.mail.config
 
-import com.csside.mail.component.*
 import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserRole
+import com.csside.mail.oauth.KakaoOAuth2Handler
+import com.csside.mail.oauth.NaverOAuth2Handler
+import com.csside.mail.oauth.OAuth2UserAdapter
+import com.csside.mail.oauth.OAuth2UserHandler
 import com.csside.mail.service.UserService
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -30,6 +35,9 @@ class WebConfig {
             }
         }
     }
+
+    @Bean
+    fun objectMapper(): ObjectMapper = ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false)
 
     @Bean
     fun oauth2UserHandler(
