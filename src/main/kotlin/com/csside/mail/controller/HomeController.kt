@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping
 @Controller
 class HomeController(val userService: UserService , val validator: UserRegisterValidator) {
 
-    final val logger = LoggerFactory.getLogger(this::class.java)
     @GetMapping("/home")
     fun home() = "home";
     @GetMapping("/login")

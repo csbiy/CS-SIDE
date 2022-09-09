@@ -1,4 +1,4 @@
-package com.csside.mail.oauth
+package com.csside.mail.security.oauth
 
 import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserType

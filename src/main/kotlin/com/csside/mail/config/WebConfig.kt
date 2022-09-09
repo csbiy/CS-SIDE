@@ -2,10 +2,10 @@ package com.csside.mail.config
 
 import com.csside.mail.entity.user.AppUser
 import com.csside.mail.enumeration.UserRole
-import com.csside.mail.oauth.KakaoOAuth2Handler
-import com.csside.mail.oauth.NaverOAuth2Handler
-import com.csside.mail.oauth.OAuth2UserAdapter
-import com.csside.mail.oauth.OAuth2UserHandler
+import com.csside.mail.security.oauth.KakaoOAuth2Handler
+import com.csside.mail.security.oauth.NaverOAuth2Handler
+import com.csside.mail.security.oauth.OAuth2UserAdapter
+import com.csside.mail.security.oauth.OAuth2UserHandler
 import com.csside.mail.service.UserService
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -49,6 +49,7 @@ class WebConfig {
         val handlers = listOf(googleOAuth2Handler, facebookOAuth2Handler , kakaoOAuth2Handler , naverOAuth2Handler);
         return OAuth2UserAdapter(handlers)
     }
+
 
 
 }

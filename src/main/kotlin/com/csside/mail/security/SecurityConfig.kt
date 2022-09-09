@@ -1,8 +1,6 @@
-package com.csside.mail.config
+package com.csside.mail.security
 
-import com.csside.mail.service.CustomOAuthUserService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
