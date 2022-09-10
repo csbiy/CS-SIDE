@@ -28,7 +28,7 @@ class SecurityConfig(val customUserDetailsService: UserDetailsService,
         http
             .authorizeRequests().antMatchers("/login","/login_proc","/register","/oauth2/**").permitAll()
             .antMatchers("/home").hasRole("USER")
-            .antMatchers("/css/**","/js/**").permitAll() // css , js 에 대한 접근은 허용 설정
+            .antMatchers("/css/**","/js/**","/api/**").permitAll() // css , js 에 대한 접근은 허용 설정
             .anyRequest().authenticated()
             .and()
             .formLogin()
