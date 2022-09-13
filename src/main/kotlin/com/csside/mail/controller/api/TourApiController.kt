@@ -3,6 +3,8 @@ package com.csside.mail.controller.api;
 
 import com.csside.mail.controller.api.request.LocationCodeRequest
 import com.csside.mail.controller.api.request.TourRequest
+import com.csside.mail.controller.api.response.TourApiResponse
+import com.csside.mail.controller.api.response.body.LocationCodeResponse
 import com.csside.mail.service.TourService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,7 +23,7 @@ class TourApiController(
     }
 
     @PostMapping("/api/location-code")
-    fun getLocationCode(@RequestBody locationCodeRequest : LocationCodeRequest) :String{
+    fun getLocationCode(@RequestBody locationCodeRequest : LocationCodeRequest) :TourApiResponse<LocationCodeResponse>{
         return tourService.findAllLocationCode(locationCodeRequest);
     }
 
