@@ -2,11 +2,27 @@
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost/dev?serverTimezone=UTC
-    username: root
-    password: 1234
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    ## url: jdbc:mysql://localhost/dev?serverTimezone=UTC
+    ## username: root
+    ## password: 1234
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ##
+            client-secret: ##
+            scope:
+              - profile
+              - email
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
+    database: h2
+    ## database: mysql
+

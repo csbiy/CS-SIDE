@@ -1,0 +1,7 @@
+<html th:fragment="layout(title,section,script,topRequire)" xmlns:th="http://www.thymeleaf.org" class="h-100">
+<head th:replace="~{/fragments/header :: head(title=${title},script=${script})}"></head>
+<body class="h-100">
+    <header th:replace="${topRequire} ? ~{/fragments/top :: header} : _"></header>
+    <section th:replace="${section}"></section>
+</body>
+</html>

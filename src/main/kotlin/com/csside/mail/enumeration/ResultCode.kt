@@ -1,0 +1,13 @@
+package com.csside.mail.enumeration
+
+enum class ResultCode(code: String) {
+    INVALID_REQUEST_PARAMETER_ERROR("10"),
+    NO_MANDATORY_REQUEST_PARAMETERS_ERROR("11"),
+    TEMPORARILY_DISABLE_THE_SERVICEKEY_ERROR("21"),
+    UNSIGNED_CALL_ERROR("33"),
+    SUCCESS("200"),
+    NORMAL_CODE("00"),
+    DB_ERROR("02"),
+    NODATA_ERROR("03"),
+    SERVICETIMEOUT_ERROR("05")
+}
