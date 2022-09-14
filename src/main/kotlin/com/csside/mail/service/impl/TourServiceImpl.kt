@@ -56,10 +56,10 @@ class TourServiceImpl(
     private fun createLocationMap() :Map<LocationCode, List<LocationCode>> {
         this.findLocationCode(LocationCodeRequest.findAllByCode("")).block()?.also { city->
             val locationMap: MutableMap<LocationCode, List<LocationCode>> = mutableMapOf()
-            unpackResponse(city).stream().forEach{ res->
-                val city = LocationCode(locationName = res.name, locationCode = res.code)
-                this.findLocationCode(LocationCodeRequest.findAllByCode(res.code)).doOnNext { street ->
-                    val street = unpackResponse(street).stream().map{LocationCode(locationName = it.name, locationCode = it.code)}.collect(Collectors.toList())
+            unpackResponse(city).stream().forEach{ cityRes->
+                val city = LocationCode(locationName = cityRes.name, locationCode = cityRes.code)
+                this.findLocationCode(LocationCodeRequest.findAllByCode(cityRes.code)).doOnNext { streetRes ->
+                    val street = unpackResponse(streetRes).stream().map{LocationCode(locationName = it.name, locationCode = it.code)}.collect(Collectors.toList())
                     locationMap.put(city,street)
                 }.block()
             }
