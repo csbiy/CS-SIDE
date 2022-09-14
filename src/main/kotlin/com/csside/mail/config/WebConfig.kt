@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono
 
 @Configuration
 @EnableScheduling
-class WebConfig(val env:Environment) {
+class WebConfig(val env: Environment) {
     val logger = LoggerFactory.getLogger(this.javaClass)
 
     @Bean
