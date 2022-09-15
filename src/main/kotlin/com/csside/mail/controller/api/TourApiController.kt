@@ -1,10 +1,7 @@
 package com.csside.mail.controller.api;
 
 
-import com.csside.mail.controller.api.request.LocationCodeRequest
-import com.csside.mail.controller.api.request.TourRequest
-import com.csside.mail.controller.api.response.TourApiResponse
-import com.csside.mail.controller.api.response.body.LocationCodeResponse
+import com.csside.mail.controller.api.request.UserLocationRequest
 import com.csside.mail.service.TourService
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,8 +17,8 @@ class TourApiController(
 ) {
 
     @PostMapping("/api/user-location-tour")
-    fun getTourListByUserLocation(tourRequest : TourRequest) :String {
-       return tourService.findByUserLocation(tourRequest);
+    fun getTourListByUserLocation(@RequestBody req: UserLocationRequest) :String {
+        return tourService.findByUserLocation(req)
     }
 
     @GetMapping("/api/alive")

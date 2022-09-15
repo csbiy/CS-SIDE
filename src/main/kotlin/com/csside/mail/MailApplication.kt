@@ -10,4 +10,5 @@ fun main(args: Array<String>) {
 	runApplication<MailApplication>(*args)
 }
 
+val METER = 1000
 

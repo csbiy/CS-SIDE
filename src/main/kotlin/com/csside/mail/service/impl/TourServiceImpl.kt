@@ -1,9 +1,11 @@
 package com.csside.mail.service.impl
 
 import com.csside.mail.controller.api.request.LocationCodeRequest
-import com.csside.mail.controller.api.request.TourRequest
+import com.csside.mail.controller.api.request.TourUserLocationRequest
+import com.csside.mail.controller.api.request.UserLocationRequest
 import com.csside.mail.controller.api.response.TourApiResponse
 import com.csside.mail.controller.api.response.body.LocationCodeResponse
+import com.csside.mail.enumeration.TourTypeId
 import com.csside.mail.model.LocationCode
 import com.csside.mail.service.TourService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -22,6 +24,7 @@ class TourServiceImpl(
 ):TourService {
 
     private val locationCodeUrl = "/areaCode"
+    private val locationBasedUrl = "/locationBasedList"
 
     final var cachedLocationMap: Map<LocationCode, List<LocationCode>> = createLocationMap()
     private set(value){
@@ -29,15 +32,22 @@ class TourServiceImpl(
     }
 
     override fun getLocationMap(): Map<LocationCode, List<LocationCode>> = cachedLocationMap
-    override fun findByUserLocation(req: TourRequest): String {
-        TODO("Not yet implemented")
+    override fun findByUserLocation(req: UserLocationRequest): String {
+
+        val multiValueMap = toRequestParam(TourUserLocationRequest(userLocationRequest = req))
+        return webClient.get()
+            .uri({
+                it.path(locationBasedUrl)
+                it.queryParams(multiValueMap)
+                it.build()
+            })
+            .retrieve()
+            .bodyToMono(String::class.java)
+            .block()!!;
     }
 
     override fun findLocationCode(req: LocationCodeRequest) :Mono<TourApiResponse<LocationCodeResponse>> {
-        val map = objectMapper.convertValue(req, Map::class.java)
-        val newMap: Map<String, String> =
-            map.entries.stream().collect(Collectors.toMap({ it.key as String }, { it.value.toString() }))
-        val multiValueMap = LinkedMultiValueMap<String, String>().apply { setAll(newMap) }
+        val multiValueMap = toRequestParam(req)
         return webClient.get()
             .uri({
                 it.path(locationCodeUrl)
@@ -48,10 +58,24 @@ class TourServiceImpl(
             .bodyToMono(object : ParameterizedTypeReference<TourApiResponse<LocationCodeResponse>>() {});
     }
 
+
+    private fun <T> toRequestParam(req: T): LinkedMultiValueMap<String, String> {
+        val map = objectMapper.convertValue(req, Map::class.java)
+        val newMap: Map<String, String> =
+            map.entries.stream().collect(Collectors.toMap({ it.key as String }, { it.value.toString() }))
+        val multiValueMap = LinkedMultiValueMap<String, String>().apply { setAll(newMap) }
+        return multiValueMap
+    }
+
+
+
     @Scheduled(cron = "0 0 0 * * *")
     override fun updateLocationMap() {
         cachedLocationMap =this.createLocationMap()
     }
+
+
+
 
     private fun createLocationMap() :Map<LocationCode, List<LocationCode>> {
         this.findLocationCode(LocationCodeRequest.findAllByCode("")).block()?.also { city->
